@@ -58,25 +58,30 @@
     </div>
 
     <script>
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
-            let errorMessage = document.getElementById("error-message");
+document.getElementById("login-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let errorMessage = document.getElementById("error-message");
 
-            let validUser = {
-                email: "user@example.com",
-                password: "password123"
-            };
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    
+    if (users.length === 0) {
+        errorMessage.textContent = "No users registered. Please create an account first.";
+        return;
+    }
 
-            if (email === validUser.email && password === validUser.password) {
-                sessionStorage.setItem("UserID", email);
-                window.location.href = "profile.html";
-            } else {
-                errorMessage.textContent = "Invalid credentials, please try again!";
-            }
-        });
+    let validUser = users.find(user => user.email.trim().toLowerCase() === email.trim().toLowerCase() && user.password === password);
+
+    if (validUser) {
+        sessionStorage.setItem("UserID", validUser.email);
+        window.location.href = "profile.html";
+    } else {
+        errorMessage.textContent = "Invalid credentials, please try again!";
+    }
+});
+
     </script>
 
 </body>
