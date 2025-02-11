@@ -59,28 +59,29 @@
     </div>
 
     <script>
-        document.getElementById("register-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            let name = document.getElementById("name").value;
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
-            let message = document.getElementById("message");
+document.getElementById("register-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let message = document.getElementById("message");
 
-            let users = JSON.parse(localStorage.getItem("users")) || [];
-            
-            if (users.find(user => user.email === email)) {
-                message.style.color = "red";
-                message.textContent = "Email is already registered!";
-                return;
-            }
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-            users.push({ name, email, password });
-            localStorage.setItem("users", JSON.stringify(users));
+    if (users.find(user => user.email === email)) {
+        message.style.color = "red";
+        message.textContent = "Email is already registered!";
+        return;
+    }
 
-            message.textContent = "Registration successful! Redirecting to login...";
-            setTimeout(() => window.location.href = "login.html", 2000);
-        });
+    users.push({ name, email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    message.textContent = "Registration successful! Redirecting to login...";
+    message.style.color = "green";
+    setTimeout(() => window.location.href = "login.html", 2000);
+});
     </script>
 
 </body>
